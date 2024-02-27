@@ -1,3 +1,18 @@
+def dibujar_gato():
+    gato = r'''
+ /\_/\ 
+( o.o )             ***  ¡ Bienvenido a Ultimate Tic Tac Toe ! ***
+ > ^ <
+    '''
+    print(gato)
+    print(" /~~~~\\")
+    print("(_    _)")
+    print("  \  /")
+    print("   ||")
+    print("   ||")
+
+# Llamamos a la función para dibujar el gato
+dibujar_gato()
 def ejecutar_instrucciones():
     entrada = input("¿Quién inicia el juego? 1.-Máquina(Yo) 0.-Oponente:  ")
 
@@ -40,7 +55,7 @@ def convertirAB(letra_mayuscula, letra_minuscula):
     
     return i, j
 
-
+dibujar_gato()
 ejecutar_instrucciones()
 # Ejemplo de uso
 i = 1
