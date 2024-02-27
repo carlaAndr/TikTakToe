@@ -1,5 +1,5 @@
 def ejecutar_instrucciones():
-    entrada = input("¿Quién inicia el juego? 1.-Máquina(Yo) 0.-Oponente")
+    entrada = input("¿Quién inicia el juego? 1.-Máquina(Yo) 0.-Oponente:  ")
 
     if entrada == '1':
         # Instrucciones si se ingresa '1'
@@ -8,9 +8,11 @@ def ejecutar_instrucciones():
 
     elif entrada == '0':
         # Instrucciones si se ingresa '0'
-        print("¿Dónde colocó su tiro? (Ingresa la posición del tablero general)")
-        posGeneral = input("Tablero General")
-        posmini = input("Tablero mini")
+        print("¿Dónde colocó su tiro? (Ingresa la posición del tablero general, una letra a la vez)")
+        posGeneral = input("Tablero General: ")
+        posmini = input("Tablero mini: ")
+        print(convertirAB(posGeneral,posmini))
+        
         
         # Aquí colocarías las instrucciones que deseas ejecutar si se ingresa '0'
 
@@ -29,8 +31,17 @@ def convertirIJ(i,j):
         return letra_mayuscula + letra_minuscula
 
 
+def convertirAB(letra_mayuscula, letra_minuscula):
+    if not ('A' <= letra_mayuscula <= 'I' and 'a' <= letra_minuscula <= 'i'):
+        return "Entrada inválida. Las letras deben estar entre A y I en mayúsculas, y a y i en minúsculas."
+    
+    i = ord(letra_mayuscula) - 65  # Convertir letra mayúscula a número (A es 65 en ASCII)
+    j = ord(letra_minuscula) - 97  # Convertir letra minúscula a número (a es 97 en ASCII)
+    
+    return i, j
 
-#ejecutar_instrucciones()
+
+ejecutar_instrucciones()
 # Ejemplo de uso
 i = 1
 j = 1
