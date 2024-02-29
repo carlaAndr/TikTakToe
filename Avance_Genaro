@@ -8,22 +8,22 @@ def evaluar_juego(tableros, tablero_actual):
     # La importancia está dada por Centro:1.75, Esquinas: 1.4, Restantes: 1
     
     # Evalúa cada uno de los 9 mini-juegos (tableros pequeños).
-    for i in range(9):
+    for i, tablero in enumerate(tableros):
         # Utiliza la función evaluates para obtener la evaluación del mini-juego actual.
-        evaluacion_tablero = evaluates(posicion[i])
+        evaluacion_tablero = evaluates(tablero)
         # Ajusta la evaluación global sumando la evaluación del tablero actual multiplicada por su ponderación.
         evaluacion_global += evaluacion_tablero * 1.5 * multiplicadores[i]
         # El 1.5 es adicional para reflejar su ponderación con mayor diferencia.
         # Lo anterior refleja que no solo importa ganar o no ganar el mini gato, sino también el estado del juego.
         
         # Utiliza la función checarGanar para determinar si hay un ganador en el mini-juego actual.
-        ganador = checarGanar(posicion[i])
+        ganador = checarGanar(tablero)
         if ganador != 0:
             # Si hay un ganador, actualiza el tablero principal para reflejar quién ha ganado el mini-juego.
             tablero_principal[i] = ganador
-        
-        # Ajusta la evaluación global en función de quién ha ganado el mini-juego, usando la ponderación específica.
-        evaluacion_global += ganador * multiplicadores[i] * 5000
+            evaluacion_global += ganador * multiplicadores[i] * 5000
+            # Ajusta la evaluación global en función de quién ha ganado el mini-juego, usando la ponderación específica.
+
     
     # Evalúa el estado global del juego basado en el tablero principal.
     ganador_global = checarGanar(tablero_principal)  # Revisa si hay un ganador en el tablero principal.
