@@ -21,13 +21,23 @@ def ejecutar_instrucciones():
 
     elif entrada == '0':
         # Instrucciones si se ingresa '0'
-        print("¿Dónde colocó su tiro? (Ingresa la posición del tablero general, una letra a la vez)")
+        """print("¿Dónde colocó su tiro? (Ingresa la posición del tablero general, una letra a la vez)")
         posGeneral = input("Tablero General: ")
         posmini = input("Tablero mini: ")
         par=convertirAB(posGeneral,posmini) 
-        #Aquí se asignaría a la posición en el gato.
-    else:
-        # En caso de que se ingrese un valor diferente de '1' o '0'
+        #Aquí se asignaría a la posición en el gato."""
+        
+        print("¿Dónde colocó su tiro? (Ingresa la posición del tablero general y del tablero mini, separadas por un espacio)")
+        posiciones = input("Posiciones (general mini): ")
+        posiciones_separadas = posiciones.split()  # Separar la cadena en dos partes utilizando el espacio como delimitador
+        if len(posiciones_separadas) != 2:
+            print("Error: Debes ingresar dos posiciones separadas por un espacio.")
+            return obtener_posiciones()  # Llamada recursiva para solicitar las posiciones nuevamente en caso de error
+        print(posiciones_separadas)
+        par=convertirAB(posiciones_separadas[0],posiciones_separadas[1])
+        print(par)    
+        #posGeneral, posMin = posiciones_separadas
+    else:# En caso de que se ingrese un valor diferente de '1' o '0'
         print("Entrada inválida. Por favor ingresa solo 1 o 0.")   
     
 def convertirIJ(i,j):
@@ -105,7 +115,7 @@ def checarGanar(pos):
     return 1
 
 #Main
-#ejecutar_instrucciones()
+ejecutar_instrucciones()
 arreglo = [0, 1, -1,
             0, -1, 1,
             0, 1,0]
