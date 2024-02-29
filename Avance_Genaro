@@ -1,22 +1,29 @@
-def evaluate_game(position, current_board):
-    global_evaluation = 0
-    main_bd_evaluation = 0
-    evaluator_mul = [1.4, 1, 1.4, 1, 1.75, 1, 1.4, 1, 1.4]
-    main_bd = [0] * 9  # Inicializa el tablero principal con 0s
+def evaluar_juego(posicion, tablero_actual):
+    evaluacion_global = 0
+    tablero_principal = [0] * 9  # Inicializa el tablero principal con 0s para representar que ningún mini-juego ha sido ganado aún.
+    multiplicadores = [1.4, 1, 1.4, 1, 1.75, 1, 1.4, 1, 1.4]  # Ponderaciones para cada mini-juego basadas en su importancia estratégica.
     
-    # Evaluar cada tablero pequeño y ajustar la puntuación global
+    # Evalúa cada uno de los 9 mini-juegos (tableros pequeños).
     for i in range(9):
-        board_evaluation = evaluates(position[i])
-        global_evaluation += board_evaluation * 1.5 * evaluator_mul[i]
+        # Utiliza la función evaluates (o su equivalente en español) para obtener la evaluación del mini-juego actual.
+        evaluacion_tablero = evaluates(posicion[i])
+        # Ajusta la evaluación global sumando la evaluación del tablero actual multiplicada por su ponderación.
+        evaluacion_global += evaluacion_tablero * 1.5 * multiplicadores[i]
         
-        # Evaluar la condición de victoria para cada tablero pequeño
-        winner = checarGanar(position[i])
-        if winner != 0:
-            main_bd[i] = winner  # Marcar el ganador en el tablero principal si hay uno
-            main_bd_evaluation += (winner * evaluator_mul[i] * 5000)  # Ajustar la puntuación del tablero principal
+        # Utiliza la función checarGanar para determinar si hay un ganador en el mini-juego actual.
+        ganador = checarGanar(posicion[i])
+        if ganador != 0:
+            # Si hay un ganador, actualiza el tablero principal para reflejar quién ha ganado el mini-juego.
+            tablero_principal[i] = ganador
+        
+        # Ajusta la evaluación global en función de quién ha ganado el mini-juego, usando la ponderación específica.
+        evaluacion_global += ganador * multiplicadores[i] * 5000
     
-    # Evaluar el tablero principal usando la función heurística
-    # Nota: Aquí asumimos que `evaluates` puede aplicarse también al tablero principal para simplificar
-    global_evaluation += evaluates(main_bd) * 150 + main_bd_evaluation
+    # Evalúa el estado global del juego basado en el tablero principal.
+    ganador_global = checarGanar(tablero_principal)  # Revisa si hay un ganador en el tablero principal.
+    if ganador_global != 0:
+        # Si hay un ganador global, ajusta significativamente la evaluación para reflejar esta victoria.
+        evaluacion_global += ganador_global * 50000
     
-    return global_evaluation
+    return evaluacion_global
+
