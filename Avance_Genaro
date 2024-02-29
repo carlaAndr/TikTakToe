@@ -1,0 +1,22 @@
+def evaluate_game(position, current_board):
+    global_evaluation = 0
+    main_bd_evaluation = 0
+    evaluator_mul = [1.4, 1, 1.4, 1, 1.75, 1, 1.4, 1, 1.4]
+    main_bd = [0] * 9  # Inicializa el tablero principal con 0s
+    
+    # Evaluar cada tablero pequeño y ajustar la puntuación global
+    for i in range(9):
+        board_evaluation = evaluates(position[i])
+        global_evaluation += board_evaluation * 1.5 * evaluator_mul[i]
+        
+        # Evaluar la condición de victoria para cada tablero pequeño
+        winner = checarGanar(position[i])
+        if winner != 0:
+            main_bd[i] = winner  # Marcar el ganador en el tablero principal si hay uno
+            main_bd_evaluation += (winner * evaluator_mul[i] * 5000)  # Ajustar la puntuación del tablero principal
+    
+    # Evaluar el tablero principal usando la función heurística
+    # Nota: Aquí asumimos que `evaluates` puede aplicarse también al tablero principal para simplificar
+    global_evaluation += evaluates(main_bd) * 150 + main_bd_evaluation
+    
+    return global_evaluation
